@@ -145,8 +145,8 @@ CREATE TABLE `seat` (
 
 INSERT INTO `seat` (`Flight_no`, `seat count`, `seat_filled`, `seat_remaining`, `Departure_Time`) VALUES
 ('SG815', 30, 0, 30, '20:45'),
-('SG773\r\n', 30, 0, 30, '18:00'),
-('SG731\r\n', 30, 0, 30, '15:00'),
+('SG773', 30, 0, 30, '18:00'),
+('SG731', 30, 0, 30, '15:00'),
 ('SG3720', 30, 0, 30, '00:15'),
 ('SG493', 30, 0, 30, '03:15'),
 ('UK-879', 30, 0, 30, '13:05'),

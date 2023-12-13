@@ -10,6 +10,24 @@ root.title("Front Page")
 root.state("zoomed")
 root.config(bg="beige")
 
+
+def on_resize(event):
+    # Update the canvas size to fill the window
+    canvas.config(width=root.winfo_width(), height=root.winfo_height())
+
+
+# Bind the resize event to the on_resize function
+root.bind("<Configure>", on_resize)
+
+# Create a canvas for the background
+canvas = tk.Canvas(root)
+canvas.pack(fill=tk.BOTH, expand=True)
+
+# Add a background image (replace 'background_image.png' with your image file)
+background_image = tk.PhotoImage(file="bg2.png")
+canvas.create_image(0, 0, anchor=tk.NW, image=background_image)
+
+
 # creating title 1 as button
 sch = " DAV Sr Secondary School"
 lbl_sch = tk.Button(root, font=("cursive", 17, 'bold'),

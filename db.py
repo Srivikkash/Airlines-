@@ -22,9 +22,10 @@ def create_connection():
 # get Departure, Destination datas
 
 
-def Check_flight(connection):
+def Check_flight(connection, sd, sde, dt):
     cursor = connection.cursor()
-    query = "SELECT DISTINCT Departure, Destination FROM flights"
+    query = "SELECT flights.Flight_no, seat.seat_remaining FROM flights JOIN seat ON flights.Flight_no = seat.Flight_no WHERE flights.DEPARTURE = '" + \
+        sd+"' AND flights.DESTINATION = '"+sde+"' AND seat.Departure_Time = '"+dt+"';"
     cursor.execute(query)
     result = cursor.fetchall()
     return result

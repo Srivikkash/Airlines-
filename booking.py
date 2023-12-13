@@ -18,20 +18,20 @@ def book(name):
     Label(root_book, font=("arial", 20, 'bold'),
           text="FROM").place(relx=0.1, rely=0.3)
     flight_f = ttk.Combobox(root_book, height=20, width=50, values=[
-                            "Pune", "Hyderabad", "Bengaluru", "Mumbai", "Jaipur", "Goa", "Aurangabad", "Ahmedabad", "Srinagar", "Bangkok", "Lucknow", "Kolkata"])
+        "bengaluru", "chennai", "mumbai", "goa", "pune", "new delhi", "lucknow", "aurangabad", "ahemdabad", "srinagar", "hyderabad", "agra", "ahmedabad", "bangkok", "bhopal"])
     flight_f.place(relx=0.2, rely=0.3)
     Label(root_book, font=("arial", 20, 'bold'),
           text="TO").place(relx=0.5, rely=0.3)
     flight_t = ttk.Combobox(root_book, height=20, width=50, values=[
-                            "Pune", "Hyderabad", "Bengaluru", "Mumbai", "Jaipur", "Goa", "Aurangabad", "Ahmedabad", "Srinagar", "Bangkok", "Lucknow", "Kolkata"])
+                            "bengaluru", "chandigarh", "chennai", "delhi", "goa", "harayana", "hyderabad", "jaipur", "kolkata", "lucknow", "mumbai", "pune", "surat"])
     flight_t.place(relx=0.55, rely=0.3)
 
     Label(root_book, font=("arial", 20, 'bold'),
-          text="Departure Time : ").place(relx=0.1, rely=0.3)
+          text="Departure Time : ").place(relx=0.1, rely=0.5)
 
     flight_d = ttk.Combobox(root_book, height=20, width=30, values=[
                             "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
-    flight_d.place(relx=0.3, rely=0.3)
+    flight_d.place(relx=0.3, rely=0.5)
 
     Button(root_book, text="Search Flights", font=("cursive", 18,
                                                    'bold'), bg="wheat", activebackground="tan", command=search).place(relx=0.25, rely=0.8)
@@ -53,34 +53,34 @@ def search():
     roots.state("zoomed")
     roots.title("BOOK")
     Label(roots, text="Book Your Flight!", font=(
-        "arial", 30, 'bold')).place(relx=0.35, rely=0.150)
+        "arial", 30, 'bold')).place(relx=0.35, rely=0.100)
 
     Label(roots, text="From", font=(
-        "arial", 30, 'bold')).place(relx=0.35, rely=0.230)
+        "arial", 30, 'bold')).place(relx=0.2, rely=0.230)
     Label(roots, text=sd, font=(
-        "arial", 30, 'bold')).place(relx=0.55, rely=0.230)
+        "arial", 30, 'bold')).place(relx=0.6, rely=0.230)
 
     Label(roots, text="To", font=(
-        "arial", 30, 'bold')).place(relx=0.35, rely=0.310)
+        "arial", 30, 'bold')).place(relx=0.2, rely=0.310)
     Label(roots, text=sde, font=(
-        "arial", 30, 'bold')).place(relx=0.55, rely=0.310)
+        "arial", 30, 'bold')).place(relx=0.6, rely=0.310)
 
     Label(roots, text="Depature Time", font=(
-        "arial", 30, 'bold')).place(relx=0.35, rely=0.350)
+        "arial", 30, 'bold')).place(relx=0.2, rely=0.390)
     Label(roots, text=dt, font=(
-        "arial", 30, 'bold')).place(relx=0.55, rely=0.350)
+        "arial", 30, 'bold')).place(relx=0.6, rely=0.390)
 
-    unique_origins_destinations = db.Check_flight(connection)
+    Flights_availabe = db.Check_flight(connection, sd, sde, dt)
     # Creating separate lists for origins and destinations
-    departure_list = [departure[0]
-                      for departure in unique_origins_destinations]
-    destination_list = [destination[1]
-                        for destination in unique_origins_destinations]
-
-    lbl = Label(roots, font=("arial", 15, 'bold'), text="0")
-    lbl.place(relx=0.35, rely=0.15)
-    lbl_1 = Label(roots, text="0")
-    lbl_1.place(relx=0.50, rely=0.50)
+    if (Flights_availabe):
+        lbl = Label(roots, font=("arial", 15, 'bold'), text="Flight Available")
+        lbl.place(relx=0.2, rely=0.470)
+        lbl_1 = Label(roots, text="Seat Count"+Flights_availabe[1])
+        lbl_1.place(relx=0.6, rely=0.470)
+    else:
+        lbl = Label(roots, font=("arial", 15, 'bold'),
+                    text="Flight Not Available")
+        lbl.place(relx=0.2, rely=0.470)
 
     def plus():
 
