@@ -12,7 +12,7 @@ def login():
     root_login = Tk()
     root_login.config(bg="beige")
     root_login.title("LOGIN")
-    root_login.geometry("500x500")
+    root_login.geometry("500x300")
 
     Label(root_login, font=("arial", 20, 'bold'),
           text="Login").place(x=90, y=53)
@@ -101,24 +101,30 @@ def registration():
 
 
 def reg():
-    try:
+    name = fullname.get()
+    passkey = Password.get()
+    mail = Email.get()
+    Gender = varblbl.get()
+    age = Age.get()
+    if ((name and passkey and mail and Gender and age)):
 
-        mycursor = connection.cursor(dictionary=True)
-        sql = "INSERT INTO login VALUES (%s, %s,%s,%s,%s)"
-        val = (fullname.get(), Password.get(), Email.get(),
-               varblbl.get(), Age.get())
-        mycursor.execute(sql, val)
+        try:
 
-        connection.commit()
+            mycursor = connection.cursor(dictionary=True)
+            sql = "INSERT INTO login VALUES (%s, %s,%s,%s,%s)"
+            val = (name, passkey, mail, Gender, age)
+            mycursor.execute(sql, val)
 
-        print(mycursor.rowcount, "record inserted.")
+            connection.commit()
 
-        mymessagebox.showinfo("Success", "Successfully Registered")
-        base.destroy()
-        login()
+            print(mycursor.rowcount, "record inserted.")
 
-    except Exception as e:
-        print(e)
-        mymessagebox.showinfo("Error", "Registered Failed Try Again!!!")
-        connection.rollback()
-        reg()
+            mymessagebox.showinfo("Success", "Successfully Registered")
+            base.destroy()
+            login()
+
+        except Exception as e:
+            print(e)
+            mymessagebox.showinfo("Error", "Registered Failed Try Again!!!")
+            connection.rollback()
+            reg()

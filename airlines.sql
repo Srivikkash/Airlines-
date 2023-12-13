@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 01:15 AM
+-- Generation Time: Dec 13, 2023 at 01:20 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -91,6 +91,7 @@ INSERT INTO `login` (`uname`, `password`, `email`, `gender`, `age`) VALUES
 ('ardra', '342', 'ardra@gmail.com', 2, 23),
 ('mohan', '123', 'mohan@gmail.com', 1, 20),
 ('Nirmal', '123', 'nirmal@gmail.com', 1, 22),
+('sri', '9283', 'vikkash@gmail.com', 1, 20),
 ('srivikkash', '123', 'vikkassri@gmail.com', 1, 20);
 
 --
