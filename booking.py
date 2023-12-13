@@ -5,9 +5,11 @@ from tkinter import ttk
 import db
 import manage
 
+connection = db.create_connection()
+
 
 def book(name):
-    global root_book, flight_t, flight_f
+    global root_book, flight_t, flight_f, flight_d
     root_book = tk.Tk()
     root_book.config(bg="beige")
     root_book.state("zoomed")
@@ -24,6 +26,13 @@ def book(name):
                             "Pune", "Hyderabad", "Bengaluru", "Mumbai", "Jaipur", "Goa", "Aurangabad", "Ahmedabad", "Srinagar", "Bangkok", "Lucknow", "Kolkata"])
     flight_t.place(relx=0.55, rely=0.3)
 
+    Label(root_book, font=("arial", 20, 'bold'),
+          text="Departure Time : ").place(relx=0.1, rely=0.3)
+
+    flight_d = ttk.Combobox(root_book, height=20, width=30, values=[
+                            "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
+    flight_d.place(relx=0.3, rely=0.3)
+
     Button(root_book, text="Search Flights", font=("cursive", 18,
                                                    'bold'), bg="wheat", activebackground="tan", command=search).place(relx=0.25, rely=0.8)
     Button(root_book, text="Manage Booking", font=("cursive", 18,
@@ -34,9 +43,10 @@ def book(name):
 
 def search():
 
-    global sd, sde
+    global sd, sde, dt
     sd = flight_f.get()
     sde = flight_t.get()
+    dt = flight_d.get()
 
     roots = Tk()
     roots.config(bg="beige")
@@ -55,11 +65,17 @@ def search():
     Label(roots, text=sde, font=(
         "arial", 30, 'bold')).place(relx=0.55, rely=0.310)
 
-    Label(roots, font=("arial", 20, 'bold'),
-          text="Departure Time : ").place(relx=0.1, rely=0.3)
-    flight_d = ttk.Combobox(roots, height=20, width=30, values=[
-                            "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
-    flight_d.place(relx=0.3, rely=0.3)
+    Label(roots, text="Depature Time", font=(
+        "arial", 30, 'bold')).place(relx=0.35, rely=0.350)
+    Label(roots, text=dt, font=(
+        "arial", 30, 'bold')).place(relx=0.55, rely=0.350)
+
+    unique_origins_destinations = db.Check_flight(connection)
+    # Creating separate lists for origins and destinations
+    departure_list = [departure[0]
+                      for departure in unique_origins_destinations]
+    destination_list = [destination[1]
+                        for destination in unique_origins_destinations]
 
     lbl = Label(roots, font=("arial", 15, 'bold'), text="0")
     lbl.place(relx=0.35, rely=0.15)

@@ -22,7 +22,7 @@ def create_connection():
 # get Departure, Destination datas
 
 
-def select_unique_origins_destinations(connection):
+def Check_flight(connection):
     cursor = connection.cursor()
     query = "SELECT DISTINCT Departure, Destination FROM flights"
     cursor.execute(query)

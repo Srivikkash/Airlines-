@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 02:29 PM
+-- Generation Time: Dec 13, 2023 at 03:22 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -75,31 +75,31 @@ CREATE TABLE `flights` (
 --
 
 INSERT INTO `flights` (`s_no`, `AIRLINES_NAME`, `DEPARTURE`, `DESTINATION`, `FLIGHT_NO`, `CHARGES`) VALUES
-(1, 'spicejet', 'MUMBAI', 'delhi', 'SG815', 7200),
+(1, 'spicejet', 'mumbai', 'delhi', 'SG815', 7200),
 (2, 'spicejet', 'chennai', 'pune', 'SG773', 8100),
 (3, 'spicejet', 'chennai', 'hyderabad', 'SG731', 5200),
 (4, 'spicejet', 'goa', 'bengaluru', 'SG3720', 6500),
 (5, 'spicejet', 'pune', 'bengaluru', 'SG493', 8500),
-(6, 'VISTARA', 'NEW DELHI', 'HYDERABAD', 'UK-879', 5000),
-(7, 'VISTARA', 'NEW DELHI', 'BENGALURU', 'UK-811', 6528),
-(8, 'VISTARA', 'MUMBAI', 'JAIPUR', 'UK-819', 4379),
-(9, 'VISTARA', 'CHENNAI', 'PUNE', 'UK-832', 6927),
-(10, 'VISTARA', 'LUCKNOW', 'GOA', 'UK-835', 8552),
-(11, 'GOAIR', 'MUMBAI', 'DELHI', 'G8395', 5500),
-(12, 'GOAIR', 'NEW DELHI', 'CHENNAI', 'G8461', 8500),
-(13, 'GOAIR', 'AURANGABAD', 'DELHI', 'G8492', 5200),
-(14, 'GOAIR', 'AHEMDABAD', 'CHANDIGARH', 'G8911', 8800),
-(15, 'GOAIR', 'AHEMDABAD', 'JAIPUR', 'G8702', 4500),
-(16, 'AIRINDIA', 'SRINAGAR', 'HYDERABAD', 'AI-802', 9200),
-(17, 'AIRINDIA', 'HYDERABAD', 'JAIPUR', 'AI-821', 7500),
-(18, 'AIRINDIA', 'BENGALURU', 'HARAYANA', 'AI-815', 6300),
-(19, 'AIRINDIA', 'MUMBAI', 'DELHI', 'AI-573', 7800),
-(20, 'AIRINDIA', 'LUCKNOW', 'MUMBAI', 'AI-550', 7500),
-(21, 'INDIGO', 'AGRA', 'BENGALURU', '6E-5917', 6650),
-(22, 'INDIGO', 'AHMEDABAD', 'LUCKNOW', '6E-544', 8245),
-(23, 'INDIGO', 'BANGKOK', 'DELHI', '6E-0086', 8500),
-(24, 'INDIGO', 'BENGALURU', 'KOLKATA', '6E-0954', 5550),
-(25, 'INDIGO', 'BHOPAL', 'SURAT', '6E-0745', 8500);
+(6, 'VISTARA', 'new delhi', 'hyderabad', 'UK-879', 5000),
+(7, 'VISTARA', 'new delhi', 'bengaluru', 'UK-811', 6528),
+(8, 'VISTARA', 'mumbai', 'jaipur', 'UK-819', 4379),
+(9, 'VISTARA', 'chennai', 'pune', 'UK-832', 6927),
+(10, 'VISTARA', 'lucknow', 'goa', 'UK-835', 8552),
+(11, 'GOAIR', 'mumbai', 'delhi', 'G8395', 5500),
+(12, 'GOAIR', 'new delhi', 'chennai', 'G8461', 8500),
+(13, 'GOAIR', 'aurangabad', 'delhi', 'G8492', 5200),
+(14, 'GOAIR', 'ahemdabad', 'chandigarh', 'G8911', 8800),
+(15, 'GOAIR', 'ahemdabad', 'jaipur', 'G8702', 4500),
+(16, 'AIRINDIA', 'srinagar', 'hyderabad', 'AI-802', 9200),
+(17, 'AIRINDIA', 'hyderabad', 'jaipur', 'AI-821', 7500),
+(18, 'AIRINDIA', 'bengaluru', 'harayana', 'AI-815', 6300),
+(19, 'AIRINDIA', 'mumbai', 'delhi', 'AI-573', 7800),
+(20, 'AIRINDIA', 'lucknow', 'mumbai', 'AI-550', 7500),
+(21, 'INDIGO', 'agra', 'bengaluru', '6E-5917', 6650),
+(22, 'INDIGO', 'ahmedabad', 'lucknow', '6E-544', 8245),
+(23, 'INDIGO', 'bangkok', 'delhi', '6E-0086', 8500),
+(24, 'INDIGO', 'bengaluru', 'kolkata', '6E-0954', 5550),
+(25, 'INDIGO', 'bhopal', 'surat', '6E-0745', 8500);
 
 -- --------------------------------------------------------
 
@@ -138,6 +138,37 @@ CREATE TABLE `seat` (
   `seat_remaining` int(20) NOT NULL,
   `Departure_Time` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `seat`
+--
+
+INSERT INTO `seat` (`Flight_no`, `seat count`, `seat_filled`, `seat_remaining`, `Departure_Time`) VALUES
+('SG815', 30, 0, 30, '20:45'),
+('SG773\r\n', 30, 0, 30, '18:00'),
+('SG731\r\n', 30, 0, 30, '15:00'),
+('SG3720', 30, 0, 30, '00:15'),
+('SG493', 30, 0, 30, '03:15'),
+('UK-879', 30, 0, 30, '13:05'),
+('UK-811', 30, 0, 30, '20:45'),
+('UK-819', 30, 0, 30, '10:45'),
+('UK-832', 30, 0, 30, '7:13'),
+('UK-835', 30, 0, 30, '03:15'),
+('G8395', 30, 0, 30, '15:00'),
+('G8461', 30, 0, 30, '18:00'),
+('G8492', 30, 0, 30, '20:45'),
+('G8911', 30, 0, 30, '13:05'),
+('G8702', 30, 0, 30, '03:15'),
+('AI-802', 30, 0, 30, '00:15'),
+('AI-821', 30, 0, 30, '7:13'),
+('AI-815', 30, 0, 30, '00:15'),
+('AI-573', 30, 0, 30, '18:00'),
+('AI-550', 30, 0, 30, '20:45'),
+('6E-5917', 30, 0, 30, '03:15'),
+('6E-544', 30, 0, 30, '7:13'),
+('6E-0086', 30, 0, 30, '13:05'),
+('6E-0954', 30, 0, 30, '18:00'),
+('6E-0745', 30, 0, 30, '00:15');
 
 --
 -- Indexes for dumped tables

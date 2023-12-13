@@ -2,17 +2,7 @@ import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
-import db
 import reg
-
-connection = db.create_connection()
-unique_origins_destinations = db.select_unique_origins_destinations(connection)
-
-# Creating separate lists for origins and destinations
-departure_list = [departure[0] for departure in unique_origins_destinations]
-destination_list = [destination[1]
-                    for destination in unique_origins_destinations]
-
 
 # creating root window
 root = tk.Tk()
