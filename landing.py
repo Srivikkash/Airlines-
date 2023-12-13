@@ -10,13 +10,6 @@ root.title("Front Page")
 root.state("zoomed")
 root.config(bg="beige")
 
-# adding image as background to our root window
-
-
-# Initialize list for cost calculation
-count = [0]
-
-
 # creating title 1 as button
 sch = " DAV Sr Secondary School"
 lbl_sch = tk.Button(root, font=("cursive", 17, 'bold'),
