@@ -7,7 +7,7 @@ import manage
 
 
 def book(name):
-    global root_book
+    global root_book, flight_t, flight_f
     root_book = tk.Tk()
     root_book.config(bg="beige")
     root_book.state("zoomed")
@@ -23,14 +23,7 @@ def book(name):
     flight_t = ttk.Combobox(root_book, height=20, width=50, values=[
                             "Pune", "Hyderabad", "Bengaluru", "Mumbai", "Jaipur", "Goa", "Aurangabad", "Ahmedabad", "Srinagar", "Bangkok", "Lucknow", "Kolkata"])
     flight_t.place(relx=0.55, rely=0.3)
-    Label(root_book, font=("arial", 20, 'bold'),
-          text="Departure Date").place(relx=0.1, rely=0.6)
-    enter1 = Entry(root_book)
-    enter1.place(relx=0.29, rely=0.6)
-    Label(root_book, font=("arial", 20, 'bold'),
-          text="Return Date").place(relx=0.45, rely=0.6)
-    enter2 = Entry(root_book)
-    enter2.place(relx=0.6, rely=0.6)
+
     Button(root_book, text="Search Flights", font=("cursive", 18,
                                                    'bold'), bg="wheat", activebackground="tan", command=search).place(relx=0.25, rely=0.8)
     Button(root_book, text="Manage Booking", font=("cursive", 18,
@@ -38,26 +31,12 @@ def book(name):
 
     root_book.mainloop()
 
-    def on_origin_select():
-        global sd
-        selected_departure = flight_f.get()
-        sd = selected_departure
-
-    # destination selector
-    def on_destination_select():
-        global sde
-        selected_destination = flight_t.get()
-        sde = selected_destination
-
-    # binding
-    flight_f.bind("<<ComboboxSelected>>", on_origin_select)
-    flight_t.bind("<<ComboboxSelected>>", on_destination_select)
-    curr1 = db.connection.cursor()
-    query = "select * from flights where Departure="+sd+" and Destination="+sde+";"
-    curr1.execute(query)
-
 
 def search():
+
+    global sd, sde
+    sd = flight_f.get()
+    sde = flight_t.get()
 
     roots = Tk()
     roots.config(bg="beige")
@@ -65,16 +44,23 @@ def search():
     roots.title("BOOK")
     Label(roots, text="Book Your Flight!", font=(
         "arial", 30, 'bold')).place(relx=0.35, rely=0.150)
+
+    Label(roots, text="From", font=(
+        "arial", 30, 'bold')).place(relx=0.35, rely=0.230)
+    Label(roots, text=sd, font=(
+        "arial", 30, 'bold')).place(relx=0.55, rely=0.230)
+
+    Label(roots, text="To", font=(
+        "arial", 30, 'bold')).place(relx=0.35, rely=0.310)
+    Label(roots, text=sde, font=(
+        "arial", 30, 'bold')).place(relx=0.55, rely=0.310)
+
     Label(roots, font=("arial", 20, 'bold'),
           text="Departure Time : ").place(relx=0.1, rely=0.3)
     flight_d = ttk.Combobox(roots, height=20, width=30, values=[
                             "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
     flight_d.place(relx=0.3, rely=0.3)
-    Label(roots, font=("arial", 20, 'bold'),
-          text="Return time").place(relx=0.5, rely=0.3)
-    flight_r = ttk.Combobox(roots, height=20, width=30, values=[
-                            "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
-    flight_r.place(relx=0.65, rely=0.3)
+
     lbl = Label(roots, font=("arial", 15, 'bold'), text="0")
     lbl.place(relx=0.35, rely=0.15)
     lbl_1 = Label(roots, text="0")

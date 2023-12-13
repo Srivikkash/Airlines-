@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 02:11 PM
+-- Generation Time: Dec 13, 2023 at 02:29 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -48,6 +48,7 @@ CREATE TABLE `booking` (
   `email` varchar(30) NOT NULL,
   `PhNo` int(10) NOT NULL,
   `Flight_no` varchar(20) NOT NULL,
+  `Departure_date` varchar(10) NOT NULL,
   `Class` int(1) NOT NULL,
   `Fee` int(10) NOT NULL,
   `Payment_status` tinyint(1) NOT NULL,
@@ -134,7 +135,8 @@ CREATE TABLE `seat` (
   `Flight_no` varchar(20) NOT NULL,
   `seat count` int(20) NOT NULL,
   `seat_filled` int(20) NOT NULL,
-  `seat_remaining` int(20) NOT NULL
+  `seat_remaining` int(20) NOT NULL,
+  `Departure_Time` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
