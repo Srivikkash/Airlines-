@@ -46,7 +46,7 @@ def cancel():
     tree.pack(expand=True, fill="both")
     tree.pack()
     Label(root_cancel, font=("arial", 15, 'bold'),
-          text="Cancel Booking").place(x=600, y=500)
+          text="Cancel Booking").place(x=610, y=330)
     Label(root_cancel, font=("arial", 15, 'bold'),
           text="Ticket Number : ").place(x=350, y=550)
     enter6 = Entry(root_cancel, width=35)
