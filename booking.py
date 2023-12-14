@@ -43,7 +43,7 @@ def book(name):
 
 def search():
 
-    global sd, sde, dt
+    global sd, sde, dt, roots, lbl, lbl_1
     sd = flight_f.get()
     sde = flight_t.get()
     dt = flight_d.get()
@@ -73,127 +73,144 @@ def search():
     Flights_availabe = db.Check_flight(connection, sd, sde, dt)
     # Creating separate lists for origins and destinations
     if (Flights_availabe):
-        lbl = Label(roots, font=("arial", 15, 'bold'), text="Flight Available")
-        lbl.place(relx=0.2, rely=0.470)
-        lbl_1 = Label(roots, text="Seat Count"+Flights_availabe[1])
-        lbl_1.place(relx=0.6, rely=0.470)
+        lbl = Label(roots, font=("arial", 30, 'bold'), text="Flight Available")
+        lbl.place(relx=0.1, rely=0.500)
+
+        lbl_0 = Label(roots, font=("arial", 30, 'bold'),
+                      text=Flights_availabe[0][0])
+        lbl_0.place(relx=0.4, rely=0.500)
+
+        lbl_1 = Label(roots, font=("arial", 30, 'bold'), text="Seat Count")
+        lbl_1.place(relx=0.6, rely=0.500)
+
+        lbl_2 = Label(roots, font=("arial", 30, 'bold'),
+                      text=Flights_availabe[0][1])
+        lbl_2.place(relx=0.8, rely=0.500)
+
+        Button(roots, text="Book a Ticket", font=("cursive", 18,
+                                                  'bold'), bg="wheat", activebackground="red", command=plus).place(relx=0.45, rely=0.8)
+
     else:
         lbl = Label(roots, font=("arial", 15, 'bold'),
                     text="Flight Not Available")
         lbl.place(relx=0.2, rely=0.470)
 
-    def plus():
 
-        global count, rootp
+def plus():
 
-        count[0] += 1
-        cost = 20000 * count[0]
-        lbl['text'] = count[0]
-        lbl_1['text'] = "rs " + str(cost)
-        rootp = Tk()
-        rootp.title("Information")
-        rootp.state("zoomed")
-        lbl_2 = Label(rootp, text="Name : ")
-        lbl_2.pack()
-        e1 = Entry(rootp, width=35)
-        e1.pack()
-        lbl_2 = Label(rootp, text="Name : ")
-        lbl_2.place(relx=0.1, rely=0.1)
-        e1 = Entry(rootp, width=35)
-        e1.place(relx=0.2, rely=0.1)
-        Label(
-            rootp, text="Enter mobile number/email address : ").place(relx=0.1, rely=0.2)
-        e2 = Entry(rootp, width=35)
-        e2.place(relx=0.2, rely=0.2)
-        Label(rootp, font=("arial", 15, 'bold'),
-              text="Choose class").place(relx=0.1, rely=0.3)
-        w4 = ttk.Combobox(rootp, height=10, width=30, values=[
-                          "BusinessClass", "Economy"])
-        w4.place(relx=0.2, rely=0.3)
-        Label(rootp, text="Enter Age:").place(relx=0.1, rely=0.4)
-        e3 = Entry(rootp, width=35)
-        e3.place(relx=0.2, rely=0.4)
+    global count, rootp
 
-    def submit():
-        rootp.destroy()
-        btn = Button(rootp, text="submit", command=submit)
-        btn.pack()
-        rootp.mainloop()
-        bb = Button(roots, font=("cursive", 20, 'bold'), bg="wheat",
-                    activebackground="tan", text="+", command=plus)
-        bb.place(relx=0.87, rely=0.87)
+    count[0] += 1
+    cost = 20000 * count[0]
+    lbl['text'] = count[0]
+    lbl_1['text'] = "rs " + str(cost)
+    rootp = Tk()
+    rootp.title("Information")
+    rootp.state("zoomed")
+    lbl_2 = Label(rootp, text="Name : ")
+    lbl_2.pack()
+    e1 = Entry(rootp, width=35)
+    e1.pack()
+    lbl_2 = Label(rootp, text="Name : ")
+    lbl_2.place(relx=0.1, rely=0.1)
+    e1 = Entry(rootp, width=35)
+    e1.place(relx=0.2, rely=0.1)
+    Label(
+        rootp, text="Enter mobile number/email address : ").place(relx=0.1, rely=0.2)
+    e2 = Entry(rootp, width=35)
+    e2.place(relx=0.2, rely=0.2)
+    Label(rootp, font=("arial", 15, 'bold'),
+          text="Choose class").place(relx=0.1, rely=0.3)
+    w4 = ttk.Combobox(rootp, height=10, width=30, values=[
+        "BusinessClass", "Economy"])
+    w4.place(relx=0.2, rely=0.3)
+    Label(rootp, text="Enter Age:").place(relx=0.1, rely=0.4)
+    e3 = Entry(rootp, width=35)
+    e3.place(relx=0.2, rely=0.4)
 
-    def addon():
-        global root_add
-        root_add = Tk()
-        root_add.title("ADD ONS")
-        root_add.config(bg="beige")
-        root_add.state("zoomed")
-        Label(root_add, font=("arial", 20, 'bold'),
-              text="Add Ons").place(relx=0.45, rely=0.1)
-        Label(root_add, font=("arial", 12),
-              text="Food Preference").place(relx=0.1, rely=0.2)
-        w5 = ttk.Combobox(root_add, height=10, width=30,
-                          values=["Veg", "NonVeg"])
-        w5.place(relx=0.3, rely=0.2)
-        Label(root_add, font=("arial", 16, 'bold'),
-              text="Veg : Veg Curry and Chapathi/White Rice").place(relx=0.2, rely=0.3)
-        Label(root_add, text="Non Veg: Chicken Curry with fried rice/chicken rice ",
-              font=("arial", 16, 'bold')).place(relx=0.2, rely=0.4)
-        Label(root_add, font=("arial", 12),
-              text="Need Special Assistance :").place(relx=0.1, rely=0.5)
-        w6 = ttk.Combobox(root_add, height=10, width=30,
-                          values=["Yes", "No"])
-        w6.place(relx=0.3, rely=0.5)
-        Label(root_add, font=("arial", 12),
-              text="Any Drink Needed :").place(relx=0.1, rely=0.6)
-        w7 = ttk.Combobox(root_add, height=10, width=30,
-                          values=["Yes", "No"])
-        w7.place(relx=0.3, rely=0.6)
-        Label(root_add, font=("arial", 12),
-              text="Pick up/drop needed :").place(relx=0.1, rely=0.7)
-        w8 = ttk.Combobox(root_add, height=10, width=30,
-                          values=["Yes", "No"])
-        w8.place(relx=0.3, rely=0.7)
-        Label(root_add, font=("arial", 14), text="Cabin baggage\n7kgs\nCheck in baggage\n15kgs\n").place(
-            relx=0.6, rely=0.55)
 
-    def pay():
-        root_pay = Tk()
-        root_pay.title("Pay")
-        root_pay.config(bg="beige")
-        root_pay.state("zoomed")
-        l_2 = Label(root_pay, font=("arial", 14),
-                    text=" Card Holder Name : ")
-        l_2.place(relx=0.1, rely=0.1)
-        en1 = Entry(root_pay, width=35)
-        en1.place(relx=0.3, rely=0.1)
-        Label(root_pay, font=("arial", 14),
-              text="Enter Card Number : ").place(relx=0.1, rely=0.2)
-        en2 = Entry(root_pay, width=35)
-        en2.place(relx=0.3, rely=0.2)
-        Label(root_pay, font=("arial", 14),
-              text="Enter Expiry Date").place(relx=0.1, rely=0.3)
-        en3 = Entry(root_pay, width=35)
-        en3.place(relx=0.25, rely=0.3)
-        Label(root_pay, font=("arial", 14),
-              text="Enter CVV:").place(relx=0.1, rely=0.4)
-        e4 = Entry(root_pay, width=35)
-        e4.place(relx=0.2, rely=0.4)
+def submit():
+    rootp.destroy()
+    btn = Button(rootp, text="submit", command=submit)
+    btn.pack()
+    rootp.mainloop()
+    bb = Button(roots, font=("cursive", 20, 'bold'), bg="wheat",
+                activebackground="tan", text="+", command=plus)
+    bb.place(relx=0.87, rely=0.87)
 
-        def complete():
-            roots.destroy()
-            root_add.destroy()
-            root_pay.destroy()
-            messagebox.showinfo(
-                "Success", "You have Booked your flight")
 
-        bpay = Button(root_pay, font=("cursive", 20, 'bold'), bg="wheat",
-                      activebackground="tan", text="Continue Payment", command=complete)
-        bpay.place(relx=0.3, rely=0.5)
-        root_pay.mainloop()
+def addon():
+    global root_add
+    root_add = Tk()
+    root_add.title("ADD ONS")
+    root_add.config(bg="beige")
+    root_add.state("zoomed")
+    Label(root_add, font=("arial", 20, 'bold'),
+          text="Add Ons").place(relx=0.45, rely=0.1)
+    Label(root_add, font=("arial", 12),
+          text="Food Preference").place(relx=0.1, rely=0.2)
+    w5 = ttk.Combobox(root_add, height=10, width=30,
+                      values=["Veg", "NonVeg"])
+    w5.place(relx=0.3, rely=0.2)
+    Label(root_add, font=("arial", 16, 'bold'),
+          text="Veg : Veg Curry and Chapathi/White Rice").place(relx=0.2, rely=0.3)
+    Label(root_add, text="Non Veg: Chicken Curry with fried rice/chicken rice ",
+          font=("arial", 16, 'bold')).place(relx=0.2, rely=0.4)
+    Label(root_add, font=("arial", 12),
+          text="Need Special Assistance :").place(relx=0.1, rely=0.5)
+    w6 = ttk.Combobox(root_add, height=10, width=30,
+                      values=["Yes", "No"])
+    w6.place(relx=0.3, rely=0.5)
+    Label(root_add, font=("arial", 12),
+          text="Any Drink Needed :").place(relx=0.1, rely=0.6)
+    w7 = ttk.Combobox(root_add, height=10, width=30,
+                      values=["Yes", "No"])
+    w7.place(relx=0.3, rely=0.6)
+    Label(root_add, font=("arial", 12),
+          text="Pick up/drop needed :").place(relx=0.1, rely=0.7)
+    w8 = ttk.Combobox(root_add, height=10, width=30,
+                      values=["Yes", "No"])
+    w8.place(relx=0.3, rely=0.7)
+    Label(root_add, font=("arial", 14), text="Cabin baggage\n7kgs\nCheck in baggage\n15kgs\n").place(
+        relx=0.6, rely=0.55)
 
-    bf = Button(root_add, font=("cursive", 20, 'bold'), bg="wheat",
+
+def pay():
+    root_pay = Tk()
+    root_pay.title("Pay")
+    root_pay.config(bg="beige")
+    root_pay.state("zoomed")
+    l_2 = Label(root_pay, font=("arial", 14),
+                text=" Card Holder Name : ")
+    l_2.place(relx=0.1, rely=0.1)
+    en1 = Entry(root_pay, width=35)
+    en1.place(relx=0.3, rely=0.1)
+    Label(root_pay, font=("arial", 14),
+          text="Enter Card Number : ").place(relx=0.1, rely=0.2)
+    en2 = Entry(root_pay, width=35)
+    en2.place(relx=0.3, rely=0.2)
+    Label(root_pay, font=("arial", 14),
+          text="Enter Expiry Date").place(relx=0.1, rely=0.3)
+    en3 = Entry(root_pay, width=35)
+    en3.place(relx=0.25, rely=0.3)
+    Label(root_pay, font=("arial", 14),
+          text="Enter CVV:").place(relx=0.1, rely=0.4)
+    e4 = Entry(root_pay, width=35)
+    e4.place(relx=0.2, rely=0.4)
+
+    def complete():
+        roots.destroy()
+        root_add.destroy()
+        root_pay.destroy()
+        messagebox.showinfo(
+            "Success", "You have Booked your flight")
+
+    bpay = Button(root_pay, font=("cursive", 20, 'bold'), bg="wheat",
+                  activebackground="tan", text="Continue Payment", command=complete)
+    bpay.place(relx=0.3, rely=0.5)
+    root_pay.mainloop()
+
+    bf = Button(root_pay, font=("cursive", 20, 'bold'), bg="wheat",
                 activebackground="tan", text="Continue Payment", command=pay)
     bf.place(relx=0.3, rely=0.8)
 
