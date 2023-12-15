@@ -22,16 +22,15 @@ def cancel():
 
     # Create a Treeview widget
     tree = ttk.Treeview(root_cancel)
-    tree["columns"] = ("Ticket_NO ", "User ", "Passenger_name ", "email ", "PhNo ",
-                       "Flight_no ", "Departure_date ", "Class ", "Fee ", "Payment_status ", "booking_sts ")
+    tree["columns"] = ("Ticket_NO", "User", "Passenger_name", "email", "PhNo", "Flight_no",
+                       "Departure_date", "Class", "Fee", "Payment_status", "booking_sts")
 
     # Add column headers
-    columns = ["Ticket_NO ", "User ", "Passenger_name ", "email ", "PhNo ", "Flight_no ",
-               "Departure_date ", "Class ", "Fee ", "Payment_status ", "booking_sts "]
+    columns = ["Ticket_NO", "User", "Passenger_name", "email", "PhNo", "Flight_no",
+               "Departure_date", "Class", "Fee", "Payment_status", "booking_sts"]
     for col in columns:
-        print(col)
         tree.heading(col, text=col)
-        tree.column(col, width=100, anchor=tk.CENTER)  # Adjust width as needed
+        tree.column(col, width=150, anchor=tk.CENTER)  # Adjust width as needed
 
     # Populate the Treeview with data
     # Add custom colors to alternating rows
@@ -47,8 +46,8 @@ def cancel():
     # Pack the Treeview widget
     tree.pack(expand=True, fill="both")
     tree.pack()
-    Label(root_cancel, font=("arial", 15, 'bold'),
-          text="Cancel Booking").place(x=610, y=330)
+    Label(root_cancel, font=("arial", 22, 'bold'),
+          text="Cancel Booking").place(x=610, y=470)
     Label(root_cancel, font=("arial", 15, 'bold'),
           text="Ticket Number : ").place(x=350, y=550)
     enter6 = Entry(root_cancel, width=35)
@@ -61,11 +60,10 @@ def cancel():
         connection.commit()
         messagebox.showinfo("Information", "TICKET CANCELLED")
         root_cancel.destroy()
-        messagebox.showinfo("Success", "You have cancelled your flight")
         messagebox.showinfo(
-            "Refund", "60%% refund has been credited to your account")
+            "Refund", "60% refund has been credited to your account")
     btn_c = Button(root_cancel, text="Cancel Flight", font=(
-        "cursive", 22, 'bold'), activebackground="tan", command=de)
+        "cursive", 15, 'bold'), activebackground="tan", command=de)
     btn_c.place(x=600, y=600)
 
     root_cancel.mainloop()
