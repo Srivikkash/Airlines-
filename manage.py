@@ -7,9 +7,12 @@ import db
 connection = db.create_connection()
 
 
+def on_treeview_scroll(*args):
+    tree.xview(*args)
+
+
 def cancel():
-    global enter6
-    global root_cancel
+    global enter6, root_cancel, tree
     root_cancel = Tk()
     root_cancel.config(bg="beige")
     root_cancel.state("zoomed")
@@ -42,6 +45,13 @@ def cancel():
             tree.tag_configure('oddrow', background='#ADD8E6')
             tree.insert('', 'end', values=ro, tags=('oddrow',))
     # Pack the Treeview widget
+    # Create horizontal scrollbar
+    hsb = ttk.Scrollbar(root_cancel, orient="horizontal",
+                        command=on_treeview_scroll)
+    hsb.pack(side="top", fill="x")
+
+    # Set the scrollbar to control the x-axis of the Treeview
+    tree.configure(xscrollcommand=hsb.set)
 
     # Pack the Treeview widget
     tree.pack(expand=True, fill="both")
