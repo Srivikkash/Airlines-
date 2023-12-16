@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2023 at 08:28 AM
+-- Generation Time: Dec 16, 2023 at 11:32 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -34,16 +34,6 @@ CREATE TABLE `addons` (
   `Drink` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `addons`
---
-
-INSERT INTO `addons` (`Ticket_NO`, `Food`, `Need_assis`, `Drink`) VALUES
-(134, 'Veg', 'No', 'No'),
-(136, 'NonVeg', 'No', 'Yes'),
-(137, 'NonVeg', 'Yes', 'Yes'),
-(138, 'NonVeg', 'Yes', 'Yes');
-
 -- --------------------------------------------------------
 
 --
@@ -62,16 +52,6 @@ CREATE TABLE `booking` (
   `Fee` int(10) NOT NULL,
   `Payment_status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `booking`
---
-
-INSERT INTO `booking` (`Ticket_NO`, `User`, `Passenger_name`, `email`, `age`, `Flight_no`, `Departure_Time`, `Class`, `Fee`, `Payment_status`) VALUES
-(134, 'srivikkash', 'srivikkash', 'vikkash@gmail.com', 20, 'SG815', '20:45', 'Economy', 7200, 'Successful'),
-(136, 'srivikkash', 'sri', 'sri@gmail.com', 20, 'SG815', '20:45', 'BusinessClass', 9200, 'Successful'),
-(137, 'srivikkash', 'srivikkash', 'vikkassri@gmail.com', 20, 'SG815', '20:45', 'Economy', 7200, 'Successful'),
-(138, 'srivikkash', 'srivikkash', 'vikkassri@gmail.com', 20, 'SG815', '20:45', 'BusinessClass', 9200, 'Successful');
 
 -- --------------------------------------------------------
 
@@ -133,17 +113,6 @@ CREATE TABLE `login` (
   `age` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `login`
---
-
-INSERT INTO `login` (`uname`, `password`, `email`, `gender`, `age`) VALUES
-('ardra', '342', 'ardra@gmail.com', 2, 23),
-('mohan', '123', 'mohan@gmail.com', 1, 20),
-('Nirmal', '123', 'nirmal@gmail.com', 1, 22),
-('Nirmala', 'aaaaa', 'csnirmalamca@gmail.com', 2, 45),
-('srivikkash', '123', 'vikkassri@gmail.com', 1, 20);
-
 -- --------------------------------------------------------
 
 --
@@ -162,7 +131,7 @@ CREATE TABLE `seat` (
 --
 
 INSERT INTO `seat` (`Flight_no`, `seat_filled`, `seat_remaining`, `Departure_Time`) VALUES
-('SG815', 4, 26, '20:45'),
+('SG815', 0, 30, '20:45'),
 ('SG773', 0, 30, '18:00'),
 ('SG731', 0, 30, '15:00'),
 ('SG3720', 0, 30, '00:15'),
@@ -218,7 +187,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `Ticket_NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+  MODIFY `Ticket_NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
 -- AUTO_INCREMENT for table `flights`
