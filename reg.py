@@ -4,7 +4,6 @@ import tkinter.messagebox as mymessagebox
 import booking
 
 # login
-connection = db.create_connection()
 
 
 def login():
@@ -28,6 +27,7 @@ def login():
     PassTxt = Entry(root_login, width=35,  font=("bold", 10))
     PassTxt .place(x=240, y=180)
     PassTxt.config(show="*")
+
     Button(root_login, text="Login", command=ClicktoLogin, width=20, bg='brown',
            fg='white').place(x=180, y=230)
     Button(root_login, text="registration", command=registration, width=20, bg='brown',
@@ -36,11 +36,9 @@ def login():
 
 def ClicktoLogin():
 
-    mycursor = connection.cursor(dictionary=True)
-    mycursor.execute("SELECT * FROM login where uname = '" +
-                     UserTxt.get() + "' and password = '" + PassTxt.get() + "';")
-    myresult = mycursor.fetchone()
     user = UserTxt.get()
+    passtxt = PassTxt.get()
+    myresult = db.login(user, passtxt)
     if myresult != None:
         mymessagebox.showinfo("Success", "Successfully Login")
         root_login.destroy()
@@ -101,30 +99,15 @@ def registration():
 
 
 def reg():
+
     name = fullname.get()
     passkey = Password.get()
     mail = Email.get()
     Gender = varblbl.get()
     age = Age.get()
+
     if ((name and passkey and mail and Gender and age)):
+        db.Registration(name, passkey, mail, Gender, age)
 
-        try:
-
-            mycursor = connection.cursor(dictionary=True)
-            sql = "INSERT INTO login VALUES (%s, %s,%s,%s,%s)"
-            val = (name, passkey, mail, Gender, age)
-            mycursor.execute(sql, val)
-
-            connection.commit()
-
-            print(mycursor.rowcount, "record inserted.")
-
-            mymessagebox.showinfo("Success", "Successfully Registered")
-            base.destroy()
-            login()
-
-        except Exception as e:
-            print(e)
-            mymessagebox.showinfo("Error", "Registered Failed Try Again!!!")
-            connection.rollback()
-            reg()
+    base.destroy()
+    login()
