@@ -28,11 +28,11 @@ lbl_sch.place(relx=0.359, rely=0.0)
 
 def animate_label(text, n=0):
     if n < len(text)-1:
-        lbl_sch.after(100, animate_label, text, n+1)
+        lbl_sch.after(150, animate_label, text, n+1)
     lbl_sch['text'] = text[:n+1]
 
 
-root.after(100, animate_label, sch)  # calling off the function
+root.after(150, animate_label, sch)  # calling off the function
 
 
 # creating title 2 as a button
@@ -44,11 +44,11 @@ lbl_csc = tk.Button(root, font=("Helvetica", 14, 'bold'),
 
 def animate_label_csc(text, n=0):
     if n < len(text)-1:
-        lbl_csc.after(100, animate_label_csc, text, n+1)
+        lbl_csc.after(150, animate_label_csc, text, n+1)
     lbl_csc['text'] = text[:n+1]
 
 
-root.after(100, animate_label_csc, csc)  # calling off the function
+root.after(150, animate_label_csc, csc)  # calling off the function
 # placing title 2 in the particular coordinates
 lbl_csc.place(relx=0.38, rely=0.08)
 
@@ -64,11 +64,11 @@ lbl_pr.place(relx=0.381, rely=0.15)
 
 def animate_label_pr(text, n=0):
     if n < len(text)-1:
-        lbl_pr.after(100, animate_label_pr, text, n+1)
+        lbl_pr.after(150, animate_label_pr, text, n+1)
     lbl_pr['text'] = text[:n+1]
 
 
-root.after(100, animate_label_pr, pr)  # calling off the function
+root.after(150, animate_label_pr, pr)  # calling off the function
 
 
 # creating title 4 as a button
@@ -88,11 +88,11 @@ lbl_n1.place(relx=0.8, rely=0.8)
 
 def animate_label_n1(text, n=0):
     if n < len(text)-1:
-        lbl_n1.after(100, animate_label_n1, text, n+1)
+        lbl_n1.after(150, animate_label_n1, text, n+1)
     lbl_n1['text'] = text[:n+1]
 
 
-root.after(100, animate_label_n1, n1)  # calling off the function
+root.after(150, animate_label_n1, n1)  # calling off the function
 
 
 # creating title 6 as a label
@@ -105,11 +105,11 @@ lbl_n2.place(relx=0.8, rely=0.85)
 
 def animate_label_n2(text, n=0):
     if n < len(text)-1:
-        lbl_n2.after(100, animate_label_n2, text, n+1)
+        lbl_n2.after(150, animate_label_n2, text, n+1)
     lbl_n2['text'] = text[:n+1]
 
 
-root.after(100, animate_label_n2, n2)  # calling off the function
+root.after(150, animate_label_n2, n2)  # calling off the function
 
 # signup
 

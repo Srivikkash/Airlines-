@@ -14,7 +14,7 @@ def login():
     root_login.geometry("500x300")
 
     Label(root_login, font=("arial", 20, 'bold'),
-          text="Login").place(x=90, y=53)
+          text="Login").place(x=225, y=53)
 
     Label(root_login, font=("arial", 15, 'bold'),
           text="Username : ").place(x=80, y=130)
@@ -29,9 +29,9 @@ def login():
     PassTxt.config(show="*")
 
     Button(root_login, text="Login", command=ClicktoLogin, width=20, bg='brown',
-           fg='white').place(x=180, y=230)
-    Button(root_login, text="registration", command=registration, width=20, bg='brown',
-           fg='white').place(x=320, y=230)
+           fg='white').place(x=100, y=230)
+    Button(root_login, text="Registration", command=registration, width=20, bg='brown',
+           fg='white').place(x=260, y=230)
 
 
 def ClicktoLogin():

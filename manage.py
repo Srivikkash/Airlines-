@@ -26,16 +26,17 @@ def cancel():
     results = db.manage_fetch()
 
     # Create a Treeview widget
-    tree = ttk.Treeview(root_cancel)
+    tree = ttk.Treeview(root_cancel, height=5)
     tree["columns"] = ("Ticket_NO", "User", "Passenger_name", "email", "age",
                        "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status")
 
     # Add column headers
     columns = ["Ticket_NO", "User", "Passenger_name", "email", "age",
                "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status"]
+
     for col in columns:
-        tree.heading(col, text=col)
         tree.column(col, width=150, anchor=tk.CENTER)  # Adjust width as needed
+        tree.heading(col, text=col)
 
     # Add custom colors to alternating rows
     for i, ro in enumerate(results):
@@ -49,14 +50,13 @@ def cancel():
     # Create horizontal scrollbar
     hsb = ttk.Scrollbar(root_cancel, orient="horizontal",
                         command=on_treeview_scroll)
-    hsb.pack(side="top", fill="x")
+    hsb.place(x=220, y=352, width=899)
 
     # Set the scrollbar to control the x-axis of the Treeview
     tree.configure(xscrollcommand=hsb.set)
 
     # Pack the Treeview widget
-    tree.pack(expand=True, fill="both")
-    tree.pack()
+    tree.place(x=220, y=70, width=900, height=300)
 
     # cancel block
     Label(root_cancel, font=("arial", 22, 'bold'),
