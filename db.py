@@ -54,8 +54,9 @@ def Registration(name, passkey, mail, Gender, age):
 # login
 
 
-def login(UserTxt, PassTxt):
-
+def login(User_Txt, PassTxt):
+    global UserTxt
+    UserTxt = User_Txt
     connection = create_connection()
     mycursor = connection.cursor()
     mycursor.execute("SELECT * FROM login where uname = '" +
@@ -70,7 +71,7 @@ def manage_fetch():
     connection = create_connection()
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT Ticket_NO, User, Passenger_name, email, age, Flight_no, Departure_Time, Class, Fee, Payment_status FROM booking")
+        "SELECT Ticket_NO, User, Passenger_name, email, age, Flight_no, Departure_Time, Class, Fee, Payment_status FROM booking where User=\"" + UserTxt+"\";")
     results = cursor.fetchall()
     return results
 

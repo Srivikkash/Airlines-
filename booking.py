@@ -74,7 +74,10 @@ def search():
 
     check_flight = db.Check_flight(
         Depature_place, Destination_place, Departure_Time)
-    Flight_no = check_flight[0][0]
+    if (check_flight):
+        Flight_no = check_flight[0][0]
+    else:
+        Flight_no = False
     # Creating separate lists for origins and destinations
     if (Flight_no and (check_flight[0][1] <= 30 and check_flight[0][1] > 0)):
         lbl = Label(roots, font=("arial", 30, 'bold'), text="Flight Available")
@@ -82,7 +85,7 @@ def search():
 
         lbl_0 = Label(roots, font=("arial", 30, 'bold'),
                       text=Flight_no)
-        lbl_0.place(relx=0.4, rely=0.500)
+        lbl_0.place(relx=0.35, rely=0.500)
 
         lbl_1 = Label(roots, font=("arial", 30, 'bold'), text="Seat Count")
         lbl_1.place(relx=0.6, rely=0.500)
