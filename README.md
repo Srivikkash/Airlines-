@@ -8,5 +8,6 @@ Libraries used:
 * mysql-connector-python
 
 Library installation command :
+
 pip install mysql-connector-python
 
