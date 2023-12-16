@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 03:22 PM
+-- Generation Time: Dec 16, 2023 at 08:28 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -31,9 +31,18 @@ CREATE TABLE `addons` (
   `Ticket_NO` int(10) NOT NULL,
   `Food` varchar(20) NOT NULL,
   `Need_assis` varchar(5) NOT NULL,
-  `Drink` varchar(5) NOT NULL,
-  `cab` varchar(5) NOT NULL
+  `Drink` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `addons`
+--
+
+INSERT INTO `addons` (`Ticket_NO`, `Food`, `Need_assis`, `Drink`) VALUES
+(134, 'Veg', 'No', 'No'),
+(136, 'NonVeg', 'No', 'Yes'),
+(137, 'NonVeg', 'Yes', 'Yes'),
+(138, 'NonVeg', 'Yes', 'Yes');
 
 -- --------------------------------------------------------
 
@@ -42,18 +51,27 @@ CREATE TABLE `addons` (
 --
 
 CREATE TABLE `booking` (
-  `Ticket_NO` int(10) NOT NULL,
+  `Ticket_NO` int(11) NOT NULL,
   `User` varchar(20) NOT NULL,
   `Passenger_name` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `PhNo` int(10) NOT NULL,
+  `age` int(3) NOT NULL,
   `Flight_no` varchar(20) NOT NULL,
-  `Departure_date` varchar(10) NOT NULL,
-  `Class` int(1) NOT NULL,
+  `Departure_Time` varchar(10) NOT NULL,
+  `Class` varchar(20) NOT NULL,
   `Fee` int(10) NOT NULL,
-  `Payment_status` tinyint(1) NOT NULL,
-  `booking_sts` int(11) NOT NULL
+  `Payment_status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`Ticket_NO`, `User`, `Passenger_name`, `email`, `age`, `Flight_no`, `Departure_Time`, `Class`, `Fee`, `Payment_status`) VALUES
+(134, 'srivikkash', 'srivikkash', 'vikkash@gmail.com', 20, 'SG815', '20:45', 'Economy', 7200, 'Successful'),
+(136, 'srivikkash', 'sri', 'sri@gmail.com', 20, 'SG815', '20:45', 'BusinessClass', 9200, 'Successful'),
+(137, 'srivikkash', 'srivikkash', 'vikkassri@gmail.com', 20, 'SG815', '20:45', 'Economy', 7200, 'Successful'),
+(138, 'srivikkash', 'srivikkash', 'vikkassri@gmail.com', 20, 'SG815', '20:45', 'BusinessClass', 9200, 'Successful');
 
 -- --------------------------------------------------------
 
@@ -123,6 +141,7 @@ INSERT INTO `login` (`uname`, `password`, `email`, `gender`, `age`) VALUES
 ('ardra', '342', 'ardra@gmail.com', 2, 23),
 ('mohan', '123', 'mohan@gmail.com', 1, 20),
 ('Nirmal', '123', 'nirmal@gmail.com', 1, 22),
+('Nirmala', 'aaaaa', 'csnirmalamca@gmail.com', 2, 45),
 ('srivikkash', '123', 'vikkassri@gmail.com', 1, 20);
 
 -- --------------------------------------------------------
@@ -133,7 +152,6 @@ INSERT INTO `login` (`uname`, `password`, `email`, `gender`, `age`) VALUES
 
 CREATE TABLE `seat` (
   `Flight_no` varchar(20) NOT NULL,
-  `seat count` int(20) NOT NULL,
   `seat_filled` int(20) NOT NULL,
   `seat_remaining` int(20) NOT NULL,
   `Departure_Time` varchar(10) NOT NULL
@@ -143,32 +161,32 @@ CREATE TABLE `seat` (
 -- Dumping data for table `seat`
 --
 
-INSERT INTO `seat` (`Flight_no`, `seat count`, `seat_filled`, `seat_remaining`, `Departure_Time`) VALUES
-('SG815', 30, 0, 30, '20:45'),
-('SG773', 30, 0, 30, '18:00'),
-('SG731', 30, 0, 30, '15:00'),
-('SG3720', 30, 0, 30, '00:15'),
-('SG493', 30, 0, 30, '03:15'),
-('UK-879', 30, 0, 30, '13:05'),
-('UK-811', 30, 0, 30, '20:45'),
-('UK-819', 30, 0, 30, '10:45'),
-('UK-832', 30, 0, 30, '7:13'),
-('UK-835', 30, 0, 30, '03:15'),
-('G8395', 30, 0, 30, '15:00'),
-('G8461', 30, 0, 30, '18:00'),
-('G8492', 30, 0, 30, '20:45'),
-('G8911', 30, 0, 30, '13:05'),
-('G8702', 30, 0, 30, '03:15'),
-('AI-802', 30, 0, 30, '00:15'),
-('AI-821', 30, 0, 30, '7:13'),
-('AI-815', 30, 0, 30, '00:15'),
-('AI-573', 30, 0, 30, '18:00'),
-('AI-550', 30, 0, 30, '20:45'),
-('6E-5917', 30, 0, 30, '03:15'),
-('6E-544', 30, 0, 30, '7:13'),
-('6E-0086', 30, 0, 30, '13:05'),
-('6E-0954', 30, 0, 30, '18:00'),
-('6E-0745', 30, 0, 30, '00:15');
+INSERT INTO `seat` (`Flight_no`, `seat_filled`, `seat_remaining`, `Departure_Time`) VALUES
+('SG815', 4, 26, '20:45'),
+('SG773', 0, 30, '18:00'),
+('SG731', 0, 30, '15:00'),
+('SG3720', 0, 30, '00:15'),
+('SG493', 0, 30, '03:15'),
+('UK-879', 0, 30, '13:05'),
+('UK-811', 0, 30, '20:45'),
+('UK-819', 0, 30, '10:45'),
+('UK-832', 0, 30, '7:13'),
+('UK-835', 0, 30, '03:15'),
+('G8395', 0, 30, '15:00'),
+('G8461', 0, 30, '18:00'),
+('G8492', 0, 30, '20:45'),
+('G8911', 0, 30, '13:05'),
+('G8702', 0, 30, '03:15'),
+('AI-802', 0, 30, '00:15'),
+('AI-821', 0, 30, '7:13'),
+('AI-815', 0, 30, '00:15'),
+('AI-573', 0, 30, '18:00'),
+('AI-550', 0, 30, '20:45'),
+('6E-5917', 0, 30, '03:15'),
+('6E-544', 0, 30, '7:13'),
+('6E-0086', 0, 30, '13:05'),
+('6E-0954', 0, 30, '18:00'),
+('6E-0745', 0, 30, '00:15');
 
 --
 -- Indexes for dumped tables
@@ -200,7 +218,7 @@ ALTER TABLE `login`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `Ticket_NO` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `Ticket_NO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
 
 --
 -- AUTO_INCREMENT for table `flights`
