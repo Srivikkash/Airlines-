@@ -84,25 +84,27 @@ def Cancel_ticket(tno):
     cursor.execute("select Flight_no from booking where Ticket_NO="+tno1+";")
     results = cursor.fetchall()
     Flight_no = results[0][0]
-
-    cursor.execute("delete from booking where Ticket_NO="+tno1+";")
-    cursor.execute("delete from addons where Ticket_NO="+tno1+";")
+    confirmation = messagebox.askokcancel(
+        "Confirmation", "Do you want to Cancel ticket"+tno1+"?")
+    if conformation:
+        cursor.execute("delete from booking where Ticket_NO="+tno1+";")
+        cursor.execute("delete from addons where Ticket_NO="+tno1+";")
 
 # update seat count
-    sql_ticket = "select seat_filled,seat_remaining from seat where Flight_no=\""+Flight_no+"\";"
-    cursor.execute(sql_ticket)
-    seat = cursor.fetchall()
+        sql_ticket = "select seat_filled,seat_remaining from seat where Flight_no=\""+Flight_no+"\";"
+        cursor.execute(sql_ticket)
+        seat = cursor.fetchall()
 
-    seat_filled = str(seat[0][0] - 1)
-    seat_remaining = str(seat[0][1]+1)
+        seat_filled = str(seat[0][0] - 1)
+        seat_remaining = str(seat[0][1]+1)
 
-    cursor.execute("update seat set seat_filled="+seat_filled +
+        cursor.execute("update seat set seat_filled="+seat_filled +
                    ",seat_remaining="+seat_remaining+" where Flight_no =\""+Flight_no+"\";")
-    connection.commit()
+        connection.commit()
 
-    mymessagebox.showinfo("Information", "TICKET CANCELLED")
-    mymessagebox.showinfo(
-        "Refund", "60% refund has been credited to your account")
+        mymessagebox.showinfo("Information", "TICKET CANCELLED")
+        mymessagebox.showinfo(
+            "Refund", "60% refund has been credited to your account")
     return None
 
 # fees
