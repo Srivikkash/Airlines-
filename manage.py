@@ -12,7 +12,9 @@ def on_treeview_scroll(*args):
 
 def de():
     tno = enter6.get()
-    db.Cancel_ticket(tno)
+    res = db.Cancel_ticket(tno)
+    if res == True:
+        root_cancel.destroy()
 
 
 def cancel():
