@@ -23,11 +23,11 @@ def create_connection():
 # get Flight No
 
 
-def Check_flight(sd, sde, dt):
+def Check_flight(sd, sde):
     connection = create_connection()
     cursor = connection.cursor()
-    query = "SELECT flights.Flight_no, seat.seat_remaining FROM flights JOIN seat ON flights.Flight_no = seat.Flight_no WHERE flights.DEPARTURE = '" + \
-        sd+"' AND flights.DESTINATION = '"+sde+"' AND seat.Departure_Time = '"+dt+"';"
+    query = "SELECT flights.Flight_no, seat.seat_remaining, seat.Departure_Time FROM flights JOIN seat ON flights.Flight_no = seat.Flight_no WHERE flights.DEPARTURE = '" + \
+        sd+"' AND flights.DESTINATION = '"+sde+"';"
     cursor.execute(query)
     result = cursor.fetchall()
     return result
@@ -71,7 +71,7 @@ def manage_fetch():
     connection = create_connection()
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT Ticket_NO, User, Passenger_name, email, age, Flight_no, Departure_Time, Class, Fee, Payment_status FROM booking where User=\"" + UserTxt+"\";")
+        "SELECT Ticket_NO, Passenger_name, email, age, Flight_no, Departure_Time, Class, Fee, Payment_status FROM booking where User=\"" + UserTxt+"\";")
     results = cursor.fetchall()
     return results
 

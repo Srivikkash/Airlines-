@@ -32,6 +32,7 @@ def animate_label(text, n=0):
     lbl_sch['text'] = text[:n+1]
 
 
+
 root.after(150, animate_label, sch)  # calling off the function
 
 

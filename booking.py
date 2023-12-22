@@ -28,84 +28,120 @@ def book(name):
                             "bengaluru", "chandigarh", "chennai", "delhi", "goa", "harayana", "hyderabad", "jaipur", "kolkata", "lucknow", "mumbai", "pune", "surat"])
     flight_t.place(relx=0.55, rely=0.3)
 
-    Label(root_book, font=("arial", 20, 'bold'),
-          text="Departure Time : ").place(relx=0.1, rely=0.5)
+    # Label(root_book, font=("arial", 20, 'bold'),
+    #       text="Departure Time : ").place(relx=0.1, rely=0.5)
 
-    flight_d = ttk.Combobox(root_book, height=20, width=30, values=[
-                            "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
-    flight_d.place(relx=0.3, rely=0.5)
+    # flight_d = ttk.Combobox(root_book, height=20, width=30, values=[
+    #                         "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
+    # flight_d.place(relx=0.3, rely=0.5)
 
     Button(root_book, text="Search Flights", font=("cursive", 18,
                                                    'bold'), bg="wheat", activebackground="tan", command=search).place(relx=0.25, rely=0.8)
     Button(root_book, text="Manage Booking", font=("cursive", 18,
-                                                   'bold'), bg="wheat", activebackground="red", command=manage.cancel).place(relx=0.45, rely=0.8)
+                                                   'bold'), bg="wheat", activebackground="tan", command=manage.cancel).place(relx=0.45, rely=0.8)
 
     root_book.mainloop()
 
 
-def search():
+def customize_listbox(listbox):
+    # Customize the appearance of the listbox
+    listbox.configure(font=("Arial", 18), bg="Beige", selectbackground="orange",
+                      selectforeground="white", bd=0, highlightthickness=0)
 
-    global Depature_place, Destination_place, Departure_Time, roots, Flight_no
+
+def create_flight_listbox(root):
+    # Create a Listbox
+    flight_listbox = Listbox(roots, font=(
+        "arial", 16), selectmode=SINGLE, width=55, borderwidth=1, relief="solid")
+    flight_listbox.place(relx=0.2, rely=0.400)
+
+    # Customize the appearance of the Listbox
+    customize_listbox(flight_listbox)
+
+    return flight_listbox
+
+
+def search():
+    global Depature_place, Destination_place, roots, flight_listbox, flight_details
+
     Depature_place = flight_f.get()
     Destination_place = flight_t.get()
-    Departure_Time = flight_d.get()
 
     roots = Tk()
     roots.config(bg="beige")
     roots.state("zoomed")
     roots.title("BOOK")
+
     Label(roots, text="Book Your Flight!", font=(
         "arial", 30, 'bold')).place(relx=0.35, rely=0.100)
 
-    Label(roots, text="From", font=(
-        "arial", 30, 'bold')).place(relx=0.2, rely=0.230)
+    Label(roots, text="From", font=("arial", 30, 'bold')).place(
+        relx=0.2, rely=0.230)
     Label(roots, text=Depature_place, font=(
         "arial", 30, 'bold')).place(relx=0.6, rely=0.230)
 
-    Label(roots, text="To", font=(
-        "arial", 30, 'bold')).place(relx=0.2, rely=0.310)
+    Label(roots, text="To", font=("arial", 30, 'bold')).place(
+        relx=0.2, rely=0.310)
     Label(roots, text=Destination_place, font=(
         "arial", 30, 'bold')).place(relx=0.6, rely=0.310)
 
-    Label(roots, text="Depature Time", font=(
-        "arial", 30, 'bold')).place(relx=0.2, rely=0.390)
-    Label(roots, text=Departure_Time,  font=(
-        "arial", 30, 'bold')).place(relx=0.6, rely=0.390)
+    check_flight = db.Check_flight(Depature_place, Destination_place)
 
-    check_flight = db.Check_flight(
-        Depature_place, Destination_place, Departure_Time)
-    if (check_flight):
-        Flight_no = check_flight[0][0]
-    else:
-        Flight_no = False
-    # Creating separate lists for origins and destinations
-    if (Flight_no and (check_flight[0][1] <= 30 and check_flight[0][1] > 0)):
-        lbl = Label(roots, font=("arial", 30, 'bold'), text="Flight Available")
-        lbl.place(relx=0.1, rely=0.500)
+    flight_listbox = Listbox(roots, font=(
+        "Courier", 20), selectmode=SINGLE, width=40)
+    flight_listbox.place(relx=0.2, rely=0.52)
 
-        lbl_0 = Label(roots, font=("arial", 30, 'bold'),
-                      text=Flight_no)
-        lbl_0.place(relx=0.35, rely=0.500)
+    flight_details = {}
 
-        lbl_1 = Label(roots, font=("arial", 30, 'bold'), text="Seat Count")
-        lbl_1.place(relx=0.6, rely=0.500)
-
-        lbl_2 = Label(roots, font=("arial", 30, 'bold'),
-                      text=check_flight[0][1])
-        lbl_2.place(relx=0.8, rely=0.500)
-
-        Button(roots, text="Book a Ticket", font=("cursive", 18,
-                                                  'bold'), bg="wheat", activebackground="red", command=plus).place(relx=0.4, rely=0.8)
-
-    else:
+    if not check_flight:
         lbl = Label(roots, font=("arial", 15, 'bold'),
                     text="Flight Not Available Or Seats Occupied")
         lbl.place(relx=0.2, rely=0.470)
+    else:
+
+        lbl = Label(roots, font=("arial", 15, 'bold'), text="Flight No")
+        lbl.place(relx=0.2, rely=0.470)
+
+        lbl = Label(roots, font=("arial", 15, 'bold'), text="Seats Remaining")
+        lbl.place(relx=0.3, rely=0.470)
+
+        lbl = Label(roots, font=("arial", 15, 'bold'), text="Departure Time")
+        lbl.place(relx=0.45, rely=0.470)
+
+        # header = f"{'Flight No':<15}{'Seats Remaining':<20}{'Departure Time':<25}"
+        # flight_listbox.insert(0, header)
+        for i, Flight_list in enumerate(check_flight):
+            flight_info = f"{Flight_list[0]:<15}{
+                Flight_list[1]:<10}{Flight_list[2]:<23}"
+            flight_listbox.insert(i, flight_info)
+            flight_details[i] = [Flight_list[0],
+                                 Flight_list[1], Flight_list[2]]
+
+        Button(roots, text="Select Flight", font=("cursive", 18, 'bold'),
+               bg="wheat", activebackground="tan", command=select_flight).place(relx=0.4, rely=0.9)
+
+    roots.mainloop()
 
 
-def plus():
+def select_flight():
+    selected_index = flight_listbox.curselection()
+    if selected_index:
+        selected_flight_details = flight_details[selected_index[0]]
+        flight_no, seats_remaining, departure_time = selected_flight_details
+        print("Selected Flight:")
+        print("Flight No:", flight_no)
+        print("Seats Remaining:", seats_remaining)
+        print("Departure Time:", departure_time)
+        plus(flight_no, departure_time)
+    else:
+        messagebox.showinfo("Selection Error", "Please select a flight.")
 
-    global rootp, Passenger_name, email, class1, age
+
+def plus(flight_no, departure_time):
+    global rootp, Passenger_name, email, class1, age, Flight_no, Departure_Time
+
+    Flight_no = flight_no
+    Departure_Time = departure_time
     rootp = Tk()
     rootp.geometry('800x450')
     rootp.config(bg="beige")
@@ -133,7 +169,6 @@ def plus():
           text="Enter Age:").place(relx=0.1, rely=0.5)
     age = Entry(rootp, width=35)
     age.place(relx=0.5, rely=0.5)
-
     btn = Button(rootp, font=("cursive", 18, 'bold'),
                  text="Addon preference", command=addon)
     btn.place(relx=0.4, rely=0.6)
@@ -236,6 +271,7 @@ def pay():
 
 
 def submit():
+    print(Flight_no)
     confirmation = messagebox.askokcancel(
         "Confirmation", "Do you want to Confirm ?")
     Food1 = Food.get()

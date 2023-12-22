@@ -7,13 +7,11 @@ import db
 def on_treeview_scroll(*args):
     tree.xview(*args)
 
-# Cancel Ticket
-
 
 def de():
     tno = enter6.get()
     res = db.Cancel_ticket(tno)
-    if res == True:
+    if res:
         root_cancel.destroy()
 
 
@@ -29,25 +27,24 @@ def cancel():
 
     # Create a Treeview widget
     tree = ttk.Treeview(root_cancel, height=5)
-    tree["columns"] = ("Ticket_NO", "User", "Passenger_name", "email", "age",
+    tree["columns"] = ("Ticket_NO", "Passenger_name", "email", "age",
                        "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status")
 
     # Add column headers
-    columns = ["Ticket_NO", "User", "Passenger_name", "email", "age",
+    columns = ["Ticket_NO", "Passenger_name", "email", "age",
                "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status"]
 
-    for col in columns:
-        tree.column(col, width=150, anchor=tk.CENTER)  # Adjust width as needed
-        tree.heading(col, text=col)
+    for i, col in enumerate(columns):
+        # Explicitly set the width for each column
+        tree.column(i, width=150, anchor=tk.CENTER)
+        tree.heading(i, text=col, anchor=tk.CENTER)
 
     # Add custom colors to alternating rows
     for i, ro in enumerate(results):
-        if i % 2 == 0:
-            tree.tag_configure('evenrow', background='#ffb6c1')
-            tree.insert('', 'end', values=ro, tags=('evenrow',))
-        else:
-            tree.tag_configure('oddrow', background='#ADD8E6')
-            tree.insert('', 'end', values=ro, tags=('oddrow',))
+        tag = 'evenrow' if i % 2 == 0 else 'oddrow'
+        tree.tag_configure(tag, background='#ffb6c1' if tag ==
+                           'evenrow' else '#ADD8E6')
+        tree.insert('', 'end', values=ro, tags=(tag,))
 
     # Create horizontal scrollbar
     hsb = ttk.Scrollbar(root_cancel, orient="horizontal",
