@@ -10,4 +10,5 @@ Libraries used:
 Library installation command :
 
 pip install mysql-connector-python
+pip install prettytable
 

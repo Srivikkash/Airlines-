@@ -1,11 +1,7 @@
 import tkinter as tk
 from tkinter import *
-from tkinter import ttk
+from prettytable import PrettyTable
 import db
-
-
-def on_treeview_scroll(*args):
-    tree.xview(*args)
 
 
 def de():
@@ -16,57 +12,82 @@ def de():
 
 
 def cancel():
-    global enter6, root_cancel, tree
+    global enter6, root_cancel, enter7
+
     root_cancel = Tk()
     root_cancel.config(bg="beige")
     root_cancel.state("zoomed")
     root_cancel.title("Manage Bookings")
 
-    # manage
+    # Manage
     results = db.manage_fetch()
 
-    # Create a Treeview widget
-    tree = ttk.Treeview(root_cancel, height=5)
-    tree["columns"] = ("Ticket_NO", "Passenger_name", "email", "age",
-                       "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status")
+    # Create PrettyTable
+    table = PrettyTable(["Ticket_NO", "User", "Passenger_name", "Email", "Age",
+                         "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status"])
 
-    # Add column headers
-    columns = ["Ticket_NO", "Passenger_name", "email", "age",
-               "Flight_no", "Departure_Time", "Class", "Fee", "Payment_status"]
+    for row in results:
+        table.add_row(row)
 
-    for i, col in enumerate(columns):
-        # Explicitly set the width for each column
-        tree.column(i, width=150, anchor=tk.CENTER)
-        tree.heading(i, text=col, anchor=tk.CENTER)
+    # Display PrettyTable in Text widget
+    text_widget = Text(root_cancel, font=("Courier", 12),
+                       wrap=NONE, height=15, width=130)
+    text_widget.insert(END, table.get_string())
+    text_widget.config(state=DISABLED)  # Make the Text widget read-only
+    text_widget.place(x=40, y=70)
 
-    # Add custom colors to alternating rows
-    for i, ro in enumerate(results):
-        tag = 'evenrow' if i % 2 == 0 else 'oddrow'
-        tree.tag_configure(tag, background='#ffb6c1' if tag ==
-                           'evenrow' else '#ADD8E6')
-        tree.insert('', 'end', values=ro, tags=(tag,))
-
-    # Create horizontal scrollbar
-    hsb = ttk.Scrollbar(root_cancel, orient="horizontal",
-                        command=on_treeview_scroll)
-    hsb.place(x=220, y=352, width=899)
-
-    # Set the scrollbar to control the x-axis of the Treeview
-    tree.configure(xscrollcommand=hsb.set)
-
-    # Pack the Treeview widget
-    tree.place(x=220, y=70, width=900, height=300)
-
-    # cancel block
+    # Cancel block
     Label(root_cancel, font=("arial", 22, 'bold'),
-          text="Cancel Booking").place(x=610, y=470)
+          text="Cancel Booking/ View Ticket").place(x=410, y=470)
     Label(root_cancel, font=("arial", 15, 'bold'),
-          text="Ticket Number : ").place(x=350, y=550)
+          text="Ticket Number: ").place(x=400, y=550)
     enter6 = Entry(root_cancel, width=35)
     enter6.place(x=600, y=550)
 
-    btn_c = Button(root_cancel, text="Cancel Flight", font=(
-        "cursive", 15, 'bold'), activebackground="tan", command=de)
-    btn_c.place(x=600, y=600)
+    Button(root_cancel, text="View Flight", font=("cursive", 15, 'bold'),
+           activebackground="tan", command=view_my_ticket).place(x=430, y=600)
+
+    # Assuming `de` is a function defined elsewhere in your code
+    Button(root_cancel, text="Cancel Flight", font=("cursive", 15, 'bold'),
+           activebackground="tan", command=de).place(x=580, y=600)
+
+    Button(root_cancel, text="Back", font=("cursive", 15, 'bold'),
+           activebackground="tan", command=lambda: root_cancel.destroy()).place(x=750, y=600)
 
     root_cancel.mainloop()
+
+
+def view_my_ticket():
+    root_view = Tk()
+    root_view.config(bg="beige")
+    root_view.title("Boarding Pass")
+    root_view.geometry("500x300")
+
+    tno = enter6.get()
+    results = db.flight_details_on_ticket(tno)
+
+    if results:
+        name, flightNO, Dep, Des, time, class_, fees = results[0]
+
+    Label(root_view, font=("arial", 22, 'bold'),
+          text="Boarding Pass").place(x=150, y=20)
+
+    Label(root_view, font=("arial", 12),
+          text=f"Name: {name}").place(x=50, y=70)
+    Label(root_view, font=("arial", 12),
+          text=f"Flight Number: {flightNO}").place(x=50, y=100)
+    Label(root_view, font=("arial", 12),
+          text=f"Departure: {Dep}").place(x=50, y=130)
+    Label(root_view, font=("arial", 12),
+          text=f"Destination: {Des}").place(x=50, y=160)
+    Label(root_view, font=("arial", 12),
+          text=f"Departure Time: {time}").place(x=50, y=190)
+    Label(root_view, font=("arial", 12),
+          text=f"Class: {class_}").place(x=300, y=70)
+    Label(root_view, font=("arial", 12),
+          text=f"Fee: ₹{fees}").place(x=300, y=100)
+
+    Button(root_view, text="Back", font=("cursive", 15, 'bold'),
+           activebackground="tan", command=root_view.destroy).place(x=200, y=240)
+
+    root_view.mainloop()
