@@ -4,6 +4,7 @@ from tkinter import messagebox
 from tkinter import ttk
 import reg
 
+
 # creating root window
 root = tk.Tk()
 root.title("Front Page")

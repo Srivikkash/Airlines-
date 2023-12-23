@@ -3,7 +3,11 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
 import db
+import reg
 import manage
+from prettytable import PrettyTable
+
+# import listFlights
 
 
 def book(name):
@@ -28,19 +32,22 @@ def book(name):
                             "bengaluru", "chandigarh", "chennai", "delhi", "goa", "harayana", "hyderabad", "jaipur", "kolkata", "lucknow", "mumbai", "pune", "surat"])
     flight_t.place(relx=0.55, rely=0.3)
 
-    # Label(root_book, font=("arial", 20, 'bold'),
-    #       text="Departure Time : ").place(relx=0.1, rely=0.5)
-
-    # flight_d = ttk.Combobox(root_book, height=20, width=30, values=[
-    #                         "13:05", "15:00", "18:00", "20:45", "00:15", "03:15", "7:13", "10:45"])
-    # flight_d.place(relx=0.3, rely=0.5)
-
     Button(root_book, text="Search Flights", font=("cursive", 18,
-                                                   'bold'), bg="wheat", activebackground="tan", command=search).place(relx=0.25, rely=0.8)
+                                                   'bold'), bg="wheat", activebackground="tan", command=search).place(relx=0.20, rely=0.4)
     Button(root_book, text="Manage Booking", font=("cursive", 18,
-                                                   'bold'), bg="wheat", activebackground="tan", command=manage.cancel).place(relx=0.45, rely=0.8)
+                                                   'bold'), bg="wheat", activebackground="tan", command=manage.cancel).place(relx=0.40, rely=0.6)
+    Button(root_book, text="View All Flights", font=("cursive", 18, 'bold'),
+           bg="wheat", activebackground="tan", command=view_all_flights).place(relx=0.60, rely=0.4)
+
+    Button(root_book, text="Logout", font=(
+        "cursive", 15, 'bold'), bg="wheat", activebackground="tan", command=back_log).place(relx=0.77, rely=0.05)
 
     root_book.mainloop()
+
+
+def back_log():
+    root_book.destroy()
+    reg.login()
 
 
 def customize_listbox(listbox):
@@ -61,8 +68,48 @@ def create_flight_listbox(root):
     return flight_listbox
 
 
+# list all flight details
+
+def view_all_flights():
+
+    # Create a new Tkinter window for viewing all flights
+    root_view = tk.Tk()
+    root_view.title("All Flights")
+    root_view.state('zoomed')
+    root_view.config(bg="beige")
+
+    # Display flight information using PrettyTable
+    headers = ["S.no", "Airline Name", "Flight_no", "Departure",
+               "Destination", "Seats Remaining", "Departure Time"]
+    table = PrettyTable(headers)
+
+    try:
+        all_flights = db.get_all_flights()
+        for flight in all_flights:
+            table.add_row([flight[0], flight[1], flight[2],
+                          flight[3], flight[4], flight[5], flight[6]])
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred: {str(e)}")
+
+    # Print PrettyTable output
+    table_str = table.get_string()
+    flight_listbox = Listbox(root_view, font=("Courier", 16), width=len(
+        table_str.splitlines()[0]) + 2, height=26, borderwidth=1, relief="solid")
+    flight_listbox.pack(pady=20)
+
+    for line in table_str.splitlines():
+        flight_listbox.insert(tk.END, line)
+
+    Button(root_view, text="Back", font=(
+        "cursive", 15, 'bold'), bg="wheat", activebackground="tan", command=lambda: root_view.destroy()).place(relx=0.8, rely=0.93)
+    Label(root_view, font=("arial", 13, 'bold'),
+          text="*Note:Scroll Down To view more").place(relx=0.5, rely=0.93)
+
+    root_view.mainloop()
+
+
 def search():
-    global Depature_place, Destination_place, roots, flight_listbox, flight_details
+    global Departure_place, Destination_place, roots, flight_listbox, flight_details
 
     Depature_place = flight_f.get()
     Destination_place = flight_t.get()

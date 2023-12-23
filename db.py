@@ -65,13 +65,37 @@ def login(User_Txt, PassTxt):
 
     return myresult
 
+# list all flight
+
+
+def get_all_flights():
+    try:
+        connection = create_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT flights.s_no,flights.AIRLINES_NAME, flights.Flight_no,flights.DEPARTURE, flights.DESTINATION, seat.seat_remaining, seat.Departure_Time FROM flights JOIN seat ON flights.Flight_no = seat.Flight_no ")
+        all_flights = cursor.fetchall()
+        return all_flights
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+    finally:
+        connection.close()
+
 
 def manage_fetch():
 
     connection = create_connection()
     cursor = connection.cursor()
     cursor.execute(
-        "SELECT Ticket_NO, Passenger_name, email, age, Flight_no, Departure_Time, Class, Fee, Payment_status FROM booking where User=\"" + UserTxt+"\";")
+        "SELECT Ticket_NO, User, Passenger_name, email, age, Flight_no, Departure_Time, Class, Fee, Payment_status FROM booking where User=\"" + UserTxt+"\";")
+    results = cursor.fetchall()
+    return results
+
+
+def flight_details_on_ticket(tno):
+
+    connection = create_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT booking.Passenger_name, booking.Flight_no, flights.DEPARTURE, flights.DESTINATION, booking.Departure_Time, booking.Class, booking.Fee FROM booking JOIN flights ON booking.Flight_no = flights.FLIGHT_NO where booking.Ticket_NO=\""+tno+"\";")
     results = cursor.fetchall()
     return results
 
@@ -137,7 +161,7 @@ def Booking_insert(User, Passenger_name, email, age,
 
     try:
 
-        sql = "INSERT INTO booking (`User`, `Passenger_name`, `email`, `age`,`Flight_no`, `Departure_Time`, `class`, `fee`, `Payment_status`) \
+        sql = "INSERT INTO booking (User, Passenger_name, email, age,Flight_no, Departure_Time, class, fee, Payment_status) \
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);"
         val = (User, Passenger_name, email, age,
                Flight_no, Departure_Time, class1, fee, Payment_status)
@@ -166,7 +190,7 @@ def addon_insert(Food, Need_assis, Drink):
         sql_ticket = "select Ticket_NO from booking order by Ticket_NO desc limit 1;"
         mycursor.execute(sql_ticket)
         Ticket_NO_addon = mycursor.fetchall()
-        sql = "INSERT INTO addons (`Ticket_NO`,`Food`, `Need_assis`, `Drink`) VALUES (%s,%s,%s,%s);"
+        sql = "INSERT INTO addons (Ticket_NO,Food, Need_assis, Drink) VALUES (%s,%s,%s,%s);"
         val = (Ticket_NO_addon[0][0], Food, Need_assis, Drink)
         mycursor.execute(sql, val)
         connection.commit()
